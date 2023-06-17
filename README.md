@@ -1,5 +1,5 @@
 # CalHacks
-CalHacks Project
+CalHacks Project 2023: AI Authenticity Insurance
 
 # Authenticity Insurance
 
