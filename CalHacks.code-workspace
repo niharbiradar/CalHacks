@@ -3,6 +3,9 @@
 		{
 			"name": "CalHacks",
 			"path": "."
+		},
+		{
+			"path": "../main-prj-05-adding-vuex-and-coach-data"
 		}
 	],
 	"settings": {}

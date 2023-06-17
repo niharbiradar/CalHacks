@@ -7,15 +7,16 @@ import Requests from './pages/Requests.vue';
 import Admin from './pages/Admin.vue';
 import NotFound from './pages/NotFound.vue';
 
-export default  createRouter({
+const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: '/', redirect: '/home'},
-        { path: '/home', component: Home},
-        { path: '/register', component: Registration},
-        { path: '/dashboard', component: Dashboard},
+        { path: '/', component: Home },
+        { path: '/home', component: Home },
+        { path: '/register', component: Registration },
+        { path: '/dashboard', component: Dashboard },
         { path: '/admin', component: Admin },
-        { path: '/requests', component: Requests},
-        { path: '/:notFound(.*)', component: NotFound},
-    ]
-})
+        { path: '/requests', component: Requests },
+        { path: '/:notFound(.*)', component: NotFound }    ]
+});
+
+export default router;
