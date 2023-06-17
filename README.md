@@ -12,3 +12,4 @@ In an era where artificial intelligence has made the creation of deepfakes and s
 Authenticity Insurance utilizes a robust social listening strategy to monitor web and media platforms around the globe. It listens for client mentions, specific keywords, sentiment analysis, and tracks virality to sift through the online noise. When a potentially harmful instance is detected, our clients receive immediate notification, no matter where they are in the world.
 
 Our application takes immediate action by using GPT-4's advanced language understanding and generation capabilities. The action could be an automatic response to the concerning media piece, filing a request to have the content removed from the platform, or generating a well-crafted rebuttal for posting on the client's organic social channels. With Authenticity Insurance, you're not just responding to threats - you're staying ahead of them.
+ 
