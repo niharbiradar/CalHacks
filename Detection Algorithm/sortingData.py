@@ -37,7 +37,7 @@ with open(file_path, 'w') as file:
 
 #####FAKE
 # Execute query
-cursor.execute("SELECT videoname FROM metadata WHERE label = 'FAKE'")
+cursor.execute("SELECT videoname FROM metadata WHERE label = 'FAKE' LIMIT 16293")
 
 # Fetch all rows
 rows = cursor.fetchall()
