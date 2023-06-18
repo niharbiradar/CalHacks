@@ -6,13 +6,16 @@ from keras.layers import Dense, Dropout
 from keras.optimizers import Adam
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 from keras.models import load_model
+from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing.image import load_img
+
 
 # Set the paths for real.txt and fake.txt files
 real_file_path = 'Detection Algorithm/real.txt'
 fake_file_path = 'Detection Algorithm/fake.txt'
 
-img_to = "Detection Algorithm/savedImages.txt"
+# Set the path for the images folder
+img_folder_path = 'Detection Algorithm/faces_224'
 
 # Define the image size and batch size
 input_size = 224
@@ -21,14 +24,10 @@ batch_size_num = 56
 # Load the list of real videonames from the real.txt file
 with open(real_file_path, 'r') as file:
     real_videonames = [line.strip() for line in file]
-    if real_videonames == None:
-        pass
 
 # Load the list of fake videonames from the fake.txt file
 with open(fake_file_path, 'r') as file:
     fake_videonames = [line.strip() for line in file]
-    if fake_videonames == None:
-        pass
 
 # Create an empty DataFrame to store the results
 test_results = pd.DataFrame(columns=["Filename", "Prediction"])
@@ -72,12 +71,40 @@ custom_callbacks = [
     )
 ]
 
+# Create an ImageDataGenerator for data augmentation and normalization
+data_generator = ImageDataGenerator(
+    rescale=1.0/255.0,  # Normalize pixel values to [0, 1]
+    rotation_range=20,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True,
+    fill_mode='nearest'
+)
+
+# Create data generators for training and validation
+train_generator = data_generator.flow_from_directory(
+    directory='Detection Algorithm/train',
+    target_size=(input_size, input_size),
+    batch_size=batch_size_num,
+    class_mode='binary'
+)
+
+val_generator = data_generator.flow_from_directory(
+    directory='Detection Algorithm/validation',
+    target_size=(input_size, input_size),
+    batch_size=batch_size_num,
+    class_mode='binary',
+    shuffle=False
+)
+
 # Train the network
 num_epochs = 20
 history = model.fit(
-    x=None,  # No input data is used for training
-    y=None,  # No target labels are used for training
+    train_generator,
     epochs=num_epochs,
+    validation_data=val_generator,
     callbacks=custom_callbacks
 )
 
@@ -86,6 +113,8 @@ best_model = load_model(os.path.join(checkpoint_filepath, 'best_model.h5'))
 
 # Iterate over the real videonames and predict the results
 for videoname in real_videonames:
-    image_path = os.path.join("Detection Algorithm/faces_224", videoname)
+    image_path = os.path.join(img_folder_path, videoname)
     image = load_img(image_path, target_size=(input_size, input_size))
-    image_array = img_to
+    # Make predictions using the best model
+    # prediction = best_model.predict(image)
+    # Update the test_results DataFrame with the prediction
