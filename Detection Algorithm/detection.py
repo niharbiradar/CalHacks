@@ -6,6 +6,7 @@ import tensorflow as tf
 print('TensorFlow version: ', tf.__version__)
 
 
+
 dataset_path = '.\\split_dataset\\'
 
 tmp_debug_path = '.\\tmp_debug'
@@ -25,21 +26,22 @@ from keras.optimizers import Adam
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 from keras.models import load_model
 
-input_size = 224
-batch_size_num = 56
+input_size = 128
+batch_size_num = 32
 train_path = os.path.join(dataset_path, 'train')
 val_path = os.path.join(dataset_path, 'val')
 test_path = os.path.join(dataset_path, 'test')
 
 train_datagen = ImageDataGenerator(
-    rescale = 1/255,    #rescale the tensor values to [0,1]
+    rescale = 1/255,
     rotation_range = 10,
     width_shift_range = 0.1,
     height_shift_range = 0.1,
     shear_range = 0.2,
     zoom_range = 0.1,
     horizontal_flip = True,
-    fill_mode = 'nearest'
+    fill_mode = 'nearest',
+    extension = 'jpg'  # Only take JPG images
 )
 
 train_generator = train_datagen.flow_from_directory(
@@ -49,10 +51,12 @@ train_generator = train_datagen.flow_from_directory(
     class_mode = "binary",  #"categorical", "binary", "sparse", "input"
     batch_size = batch_size_num,
     shuffle = True
+    #save_to_dir = tmp_debug_path
 )
 
 val_datagen = ImageDataGenerator(
-    rescale = 1/255    #rescale the tensor values to [0,1]
+    rescale = 1/255,
+    extension = 'jpg'  # Only take JPG images
 )
 
 val_generator = val_datagen.flow_from_directory(
@@ -62,11 +66,11 @@ val_generator = val_datagen.flow_from_directory(
     class_mode = "binary",  #"categorical", "binary", "sparse", "input"
     batch_size = batch_size_num,
     shuffle = True
-    #save_to_dir = tmp_debug_path
 )
 
 test_datagen = ImageDataGenerator(
-    rescale = 1/255    #rescale the tensor values to [0,1]
+    rescale = 1/255,
+    extension = 'jpg'  # Only take JPG images
 )
 
 test_generator = test_datagen.flow_from_directory(
@@ -129,7 +133,6 @@ history = model.fit_generator(
     callbacks = custom_callbacks
 )
 print(history.history)
-
 
 # load the saved model that is considered the best
 best_model = load_model(os.path.join(checkpoint_filepath, 'best_model.h5'))

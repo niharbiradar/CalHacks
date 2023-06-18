@@ -1,6 +1,7 @@
 import mysql.connector
 import os
-import splitfolders
+
+
 
 # Establish connection
 conn = mysql.connector.connect(
@@ -58,6 +59,13 @@ with open(file_path_fake, 'w') as file:
     # Write the videoname values to the file
     for row in rows:
         file.write(row[0] + '\n')
+
+
+
+
+
+
+
 
 # Close cursor and connection
 cursor.close()
