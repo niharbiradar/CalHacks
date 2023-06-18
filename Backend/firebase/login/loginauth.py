@@ -1,11 +1,11 @@
 #login using python and firebase to auth user login
 from getpass import getpass
 from flask import config
-import pyrebase
 import loginconf
+import pyrebase
+
 
 firebase = pyrebase.initialize_app(config)
-
 
 auth = firebase.auth()
 
