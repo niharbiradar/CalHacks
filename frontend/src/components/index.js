@@ -4,7 +4,6 @@ import CardDeal from "./CardDeal";
 import Business from "./Business";
 import Stats from "./Stats";
 import Footer from "./Footer";
-import Testimonials from "./Testimonials";
 import Hero from "./Hero";
 
 export {
@@ -14,6 +13,5 @@ export {
   Business,
   Stats,
   Footer,
-  Testimonials,
   Hero,
 };
