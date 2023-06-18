@@ -29,7 +29,7 @@ const Dashboard =() => {
                  <ul className="pt-6">
                     {Menus.map((menu,index) =>  (
                         <li key={index} 
-                            className={`text-gray-300 text-sm flex items-center
+                            className={`text-gray-300 text-sm flex items-center scale-50
                             gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-mds
                             ${menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"}'}`}>
                             <img src= {`./src/assets/${menu.src}.png`} />
