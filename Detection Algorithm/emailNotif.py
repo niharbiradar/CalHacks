@@ -15,7 +15,7 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.send']
 TOKEN_FILE = 'token.json'  # Replace with the path to your token file
 CREDENTIALS_FILE = 'credentials.json'  # Replace with the path to your credentials file
 
-def create_message_with_attachment(sender, to, subject, message_text, file_path):
+def create_message_with_attachment(sender, to, subject, message_text, file_path);
     message = MIMEMultipart()
     message['to'] = to
     message['subject'] = subject
