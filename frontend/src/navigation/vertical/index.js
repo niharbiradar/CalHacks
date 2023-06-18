@@ -47,6 +47,12 @@ export default[
                 title: 'List',
                 icon: <List size ={20} />,
                 navLink: '/'
+            },
+            {
+                id: 'Logout',
+                title: 'Logout',
+                icon: <List size ={20} />,
+                navLink: '/'
             }
         ]
     },
