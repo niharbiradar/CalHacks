@@ -3,7 +3,7 @@ import pandas as pd
 
 # TensorFlow and tf.keras
 import tensorflow as tf
-from tensorflow import keras
+import keras
 from tensorflow.keras import backend as K
 print('TensorFlow version: ', tf.__version__)
 
