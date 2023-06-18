@@ -4,9 +4,9 @@ import Button from './Button';
 const CardDeal = () => (
   <section className={layout.section}>
     <div className={layout.sectionInfo}>
-      <h2 className={styles.heading2}>Find a better card deal <br className="sm:block hidden" />in a few steps.</h2>
-      <p className={``}>yada yada yada</p>
-      <Button> SignUp Today!</Button>
+      <h2 className={styles.heading2}>Can You Afford <br className="sm:block hidden" />The Risk?</h2>
+      <p className={`white-text`}>yada yada yada</p>
+      <Button/>
     </div>
     <div>
     
