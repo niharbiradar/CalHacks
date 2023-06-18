@@ -18,6 +18,9 @@ import home from "./home.png";
 import User from "./User.png";
 import DeepFakeC from "./deepfakec.png";
 import ChatBubble from "./chatbubble.png";
+import df1 from "./df1.jpg"
+import df2 from "./df2.jpg"
+import df3 from "./df3.jpg"
 
 export {
   logo,
@@ -39,5 +42,8 @@ export {
   home,
   User,
   DeepFakeC,
-  ChatBubble
+  ChatBubble,
+  df1,
+  df2,
+  df3,
 };

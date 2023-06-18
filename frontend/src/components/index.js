@@ -5,6 +5,9 @@ import Business from "./Business";
 import Stats from "./Stats";
 import Footer from "./Footer";
 import Hero from "./Hero";
+import DashHero from "./DashHero";
+import Dashbar from "./Dashbar";
+import DfList from "./DfList";
 
 export {
   Navbar,
@@ -14,4 +17,7 @@ export {
   Stats,
   Footer,
   Hero,
+  DashHero,
+  Dashbar,
+  DfList
 };
