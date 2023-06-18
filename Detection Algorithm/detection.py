@@ -1,120 +1,81 @@
 import os
-import pandas as pd
-from efficientnet.tfkeras import EfficientNetB0
-from keras.models import Sequential
-from keras.layers import Dense, Dropout
-from keras.optimizers import Adam
-from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.models import load_model
-from keras.preprocessing.image import ImageDataGenerator
-from keras.preprocessing.image import load_img
+import numpy as np
+import cv2
+from keras.applications.vgg16 import VGG16
+from keras.models import Model
+from sklearn.svm import SVC
+from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 
+directory = 'Detection Algorithm/faces_224'
+def load_images_from_directory(directory):
+    images = []
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
+        image = cv2.imread(file_path)
+        image = cv2.resize(image, (224, 224))
+        images.append(image)
+    return np.array(images)
 
-# Set the paths for real.txt and fake.txt files
-real_file_path = 'Detection Algorithm/real.txt'
-fake_file_path = 'Detection Algorithm/fake.txt'
+# Step 1: Data Collection and Preprocessing
+training_directory_real = 'Detection Algorithm/training/real'
+training_directory_fake = 'Detection Algorithm/training/fake'
+validation_directory_real = 'Detection Algorithm/validation/real'
+validation_directory_fake = 'Detection Algorithm/validation/fake'
 
-# Set the path for the images folder
-img_folder_path = 'Detection Algorithm/faces_224'
+real_images_train = load_images_from_directory(training_directory_real)
+fake_images_train = load_images_from_directory(training_directory_fake)
+real_images_val = load_images_from_directory(validation_directory_real)
+fake_images_val = load_images_from_directory(validation_directory_fake)
 
-# Define the image size and batch size
-input_size = 224
-batch_size_num = 56
+labels_train = np.concatenate((np.ones(len(real_images_train)), np.zeros(len(fake_images_train))))
+labels_val = np.concatenate((np.ones(len(real_images_val)), np.zeros(len(fake_images_val))))
 
-# Load the list of real videonames from the real.txt file
-with open(real_file_path, 'r') as file:
-    real_videonames = [line.strip() for line in file]
+# Step 2: Feature Extraction
+def extract_features(images):
+    model = VGG16(weights='imagenet', include_top=False)
+    feature_extractor = Model(inputs=model.input, outputs=model.get_layer('fc2').output)
+    features = feature_extractor.predict(images)
+    return features
 
-# Load the list of fake videonames from the fake.txt file
-with open(fake_file_path, 'r') as file:
-    fake_videonames = [line.strip() for line in file]
+real_features_train = extract_features(real_images_train)
+fake_features_train = extract_features(fake_images_train)
+real_features_val = extract_features(real_images_val)
+fake_features_val = extract_features(fake_images_val)
 
-# Create an empty DataFrame to store the results
-test_results = pd.DataFrame(columns=["Filename", "Prediction"])
+all_features_train = np.concatenate((real_features_train, fake_features_train))
+all_features_val = np.concatenate((real_features_val, fake_features_val))
 
-# Load the EfficientNet model
-efficient_net = EfficientNetB0(
-    weights='imagenet',
-    input_shape=(input_size, input_size, 3),
-    include_top=False,
-    pooling='max'
-)
+# Step 3: Feature Fusion
+# Perform feature fusion here, e.g., concatenation or averaging of features
 
-model = Sequential()
-model.add(efficient_net)
-model.add(Dense(units=512, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(units=128, activation='relu'))
-model.add(Dense(units=1, activation='sigmoid'))
-model.summary()
+# Step 4: Classifier Training
+X_train, X_val, y_train, y_val = train_test_split(all_features_train, labels_train, test_size=0.2, random_state=42)
 
-# Compile the model
-model.compile(optimizer=Adam(lr=0.0001), loss='binary_crossentropy', metrics=['accuracy'])
+# Normalize the features
+X_train /= 255.0
+X_val /= 255.0
 
-checkpoint_filepath = './tmp_checkpoint'
-print('Creating Directory: ' + checkpoint_filepath)
-os.makedirs(checkpoint_filepath, exist_ok=True)
+# Encode labels
+label_encoder = LabelEncoder()
+y_train_encoded = label_encoder.fit_transform(y_train)
+y_val_encoded = label_encoder.transform(y_val)
 
-custom_callbacks = [
-    EarlyStopping(
-        monitor='val_loss',
-        mode='min',
-        patience=5,
-        verbose=1
-    ),
-    ModelCheckpoint(
-        filepath=os.path.join(checkpoint_filepath, 'best_model.h5'),
-        monitor='val_loss',
-        mode='min',
-        verbose=1,
-        save_best_only=True
-    )
-]
+# Train SVM classifier
+svm = SVC(kernel='linear')
+svm.fit(X_train, y_train_encoded)
 
-# Create an ImageDataGenerator for data augmentation and normalization
-data_generator = ImageDataGenerator(
-    rescale=1.0/255.0,  # Normalize pixel values to [0, 1]
-    rotation_range=20,
-    width_shift_range=0.2,
-    height_shift_range=0.2,
-    shear_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True,
-    fill_mode='nearest'
-)
+# Step 5: Testing and Evaluation
+X_test = all_features_val / 255.0
+y_val_pred = svm.predict(X_val)
+y_val_pred = label_encoder.inverse_transform(y_val_pred)
 
-# Create data generators for training and validation
-train_generator = data_generator.flow_from_directory(
-    directory='Detection Algorithm/train',
-    target_size=(input_size, input_size),
-    batch_size=batch_size_num,
-    class_mode='binary'
-)
+print("Validation Results:")
+print(classification_report(y_val, y_val_pred))
 
-val_generator = data_generator.flow_from_directory(
-    directory='Detection Algorithm/validation',
-    target_size=(input_size, input_size),
-    batch_size=batch_size_num,
-    class_mode='binary',
-    shuffle=False
-)
+y_test_pred = svm.predict(X_test)
+y_test_pred = label_encoder.inverse_transform(y_test_pred)
 
-# Train the network
-num_epochs = 20
-history = model.fit(
-    train_generator,
-    epochs=num_epochs,
-    validation_data=val_generator,
-    callbacks=custom_callbacks
-)
-
-# Load the saved model that is considered the best
-best_model = load_model(os.path.join(checkpoint_filepath, 'best_model.h5'))
-
-# Iterate over the real videonames and predict the results
-for videoname in real_videonames:
-    image_path = os.path.join(img_folder_path, videoname)
-    image = load_img(image_path, target_size=(input_size, input_size))
-    # Make predictions using the best model
-    # prediction = best_model.predict(image)
-    # Update the test_results DataFrame with the prediction
+print("Testing Results:")
+print(classification_report(labels_val, y_test_pred))
