@@ -10,4 +10,3 @@ connection = mysql.connector.connect(
 )
 
 cursor = connection.cursor();
-
