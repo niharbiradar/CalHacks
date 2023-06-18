@@ -21,7 +21,7 @@ const Navbar = () => {
           </li>
         ))}
           <li>
-            <button className={`py-3 px-6 bg-blue-gradient font-poppins font-medium text-[16px] text-white outline-none  ${styles}`}> SignUp / LogIn </button>
+            <button className={`py-3 px-6 ml-5 rounded bg-blue-gradient font-poppins font-medium text-[16px] text-white outline-none  ${styles}`}> SignUp / LogIn </button>
           </li>
       </ul>
 
@@ -46,7 +46,7 @@ const Navbar = () => {
                 </li>
               ))}
               <li>
-                <button className={`py-4 px-6  bg-blue-gradient font-poppins font-medium text-[18px] text-white outline-none mt-5 ${styles}`}> SignUp / LogIn </button>
+                <button className={`py-4 px-6 rounded bg-blue-gradient font-poppins font-medium text-[18px] text-white outline-none mt-5 ${styles}`}> SignUp / LogIn </button>
               </li>
             </ul>
           </div>

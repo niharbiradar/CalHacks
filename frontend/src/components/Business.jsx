@@ -25,7 +25,7 @@ const Business = () => {
         <h2 className={styles.heading2}>In The Battle of <br /> Ai Vs. DeepFakes, <br className="sm:block hidden" /> We Are The <br /> Winning Team</h2>
         <p className={`${styles.paragraph} max-w-[470px] mt-5`}>As deepfakes advance, they meet their match in our cutting-edge Generative Adversarial Networks (GANs). We specialize in utilizing GANs to unmask and combat deepfakes, ensuring the integrity of digital content.</p>
 
-        <Button styles="mt-10" />
+        <Button styles="mt-10 rounded" />
       </div>
 
       <div className={`${layout.sectionImg} flex-col`}>
