@@ -3,16 +3,10 @@ import pandas as pd
 
 # TensorFlow and tf.keras
 import tensorflow as tf
-import keras
-from tensorflow.keras import backend as K
+from tensorflow import keras 
+from keras import backend as K
 print('TensorFlow version: ', tf.__version__)
 
-# Set to force CPU
-#os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
-#if tf.test.gpu_device_name():
-#    print('GPU found')
-#else:
-#    print("No GPU found")
 
 dataset_path = '.\\split_dataset\\'
 
@@ -25,17 +19,16 @@ def get_filename_only(file_path):
     filename_only = file_basename.split('.')[0]
     return filename_only
 
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras import applications
+from keras.preprocessing.image import ImageDataGenerator
 from efficientnet.tfkeras import EfficientNetB0 #EfficientNetB1, EfficientNetB2, EfficientNetB3, EfficientNetB4, EfficientNetB5, EfficientNetB6, EfficientNetB7
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
-from tensorflow.keras.models import load_model
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
+from keras.optimizers import Adam
+from keras.callbacks import EarlyStopping, ModelCheckpoint
+from keras.models import load_model
 
-input_size = 128
-batch_size_num = 32
+input_size = 224
+batch_size_num = 56
 train_path = os.path.join(dataset_path, 'train')
 val_path = os.path.join(dataset_path, 'val')
 test_path = os.path.join(dataset_path, 'test')
