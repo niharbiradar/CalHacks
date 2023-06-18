@@ -3,7 +3,7 @@ import tensorflow
 import mysql.connector
 
 connection = mysql.connector.connect(
-    host='localhost',
+    host='127.0.0.1',
     user='root',
     password='Pillow007',
     database='Local instance 3306'
