@@ -73,18 +73,13 @@ export const feedback = [
 export const stats = [
   {
     id: "stats-1",
-    title: "User Active",
-    value: "3800+",
+    title: "DeepFake Increase YoY",
+    value: "13x",
   },
   {
     id: "stats-2",
-    title: "Trusted by Company",
-    value: "230+",
-  },
-  {
-    id: "stats-3",
-    title: "Transaction",
-    value: "$230M+",
+    title: "Annualy Damages ",
+    value: "$78B+",
   },
 ];
 
