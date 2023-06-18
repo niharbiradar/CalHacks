@@ -1,5 +1,5 @@
 import {useState} from 'react'
-
+import styles from '../style';
 import { close, logo, menu } from '../assets';
 import { navLinks } from '../constants';
 
@@ -13,13 +13,16 @@ const Navbar = () => {
         {navLinks.map((nav, index) => (
           <li
             key={nav.id}
-            className={`font-poppins font-normal cursor-pointer text-[16px] ${index === navLinks.length - 1 ? 'mr-0' : 'mr-10'} text-white`}
+            className={`font-poppins font-normal cursor-pointer text-[16px] pe-5 ${index === navLinks.length - 1 ? 'mr-0' : 'mr-10'} text-white`}
           >
             <a href={`#${nav.id}`}>
               {nav.title}
             </a>
           </li>
         ))}
+          <li>
+            <button className={`py-3 px-6 bg-blue-gradient font-poppins font-medium text-[16px] text-white outline-none  ${styles}`}> SignUp / LogIn </button>
+          </li>
       </ul>
 
       <div className="sm:hidden flex flex-1 justify-end items-center">
@@ -42,6 +45,9 @@ const Navbar = () => {
                   </a>
                 </li>
               ))}
+              <li>
+                <button className={`py-4 px-6  bg-blue-gradient font-poppins font-medium text-[18px] text-white outline-none mt-5 ${styles}`}> SignUp / LogIn </button>
+              </li>
             </ul>
           </div>
       </div>   
