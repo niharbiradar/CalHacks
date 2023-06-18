@@ -1,6 +1,7 @@
-import { userState } from "react"
+import { useState } from "react"
+import { logo, home, User  } from '../src/assets';
 const Dashboard =() => {
-    const [open, setOpen] = userState(true);
+    const [open, setOpen] = useState(true);
     const Menus = [
         { title: "Dashboard", src: "Chart_fill"},
         { title: "Accounts", src: "User", gap:true},
@@ -12,14 +13,14 @@ const Dashboard =() => {
             <div className={`${open ? 'w-72': "w-20"} 
             duration-300 h-screen p-5 pt-8 bg-dark-purple`}>
                 <img
-                 src="./src/assests/control.png"
+                 src={logo}
                  className={`absolute cursor-pointer rounded h-full
                  -right-3 top-9 w-7 border-2 border-dark-purple $(!open && 'rotate-180'}`}
                  onClick={() => setOpen(!open)}
                  />
                  <div className ="flex gap-x-4 items-center">
-                    <img src = "./src.assests/logo.png" 
-                    className={`cursor-pointer duration-500 ${
+                    <img src={home}  
+                    className={`cursor-pointer duration-500 w-[15%] h-[15%] ${
                         open && "rotate-[360deg]"}`}
                     />
                     <hi className={`text-white origin-left font-medium text-xl 

@@ -28,7 +28,7 @@ const Hero = () => (
       <h1 className="flex-1 font-poppins font-semibold ss:text-[68px] text-[52px] text-white ss:leading-[100px] leading-[75px] w-full">
         Digital Deception
       </h1>
-      <p className={`${styles.paragraph} :max-w-[490px] mt-5`}> Auth Insurance is your reliable safeguard against deepfakes, misinformation, 
+      <p className={`${styles.paragraph} :max-w-[490px]`}> Auth Insurance is your reliable safeguard against deepfakes, misinformation, 
         and disinformation.</p>
     </div>
     <div>

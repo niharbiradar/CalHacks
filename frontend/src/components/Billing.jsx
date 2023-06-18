@@ -1,4 +1,4 @@
-import { apple, bill, google } from '../assets';
+import { bill } from '../assets';
 import styles, { layout } from '../style';
 
 const Billing = () => (
@@ -14,10 +14,6 @@ const Billing = () => (
       <p className={`${styles.paragraph} max-w-[470px] mt-5`}>
       Stand with us on the frontlines of this technological warfare, as we work tirelessly to uphold truth, safeguard reputations, and restore trust in the world of digital communication. With our AI expertise by your side, deepfakes will find no quarter.
       </p>
-      <div className="flex flex-row flex-wrap sm:mt-10 mt-6">
-        <img src={apple} alt="apple_store" className="w-[128px] h-[42px] object-contain mr-5 cursor-pointer" />
-        <img src={google} alt="google_play" className="w-[128px] h-[42px] object-contain cursor-pointer" />
-      </div>
     </div>
   </section>
 )
